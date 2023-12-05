@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.skillbox.bookshelf.dto.BookResponseDto;
 import ru.skillbox.bookshelf.entity.Book;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookShelfRepository extends JpaRepository<Book, Long> {
@@ -22,5 +23,5 @@ public interface BookShelfRepository extends JpaRepository<Book, Long> {
            select * from public.books where books.name like concat('%', :bookName , '%') and
            books.author like concat('%', :nameAuthor , '%')
            """, nativeQuery = true)
-    BookResponseDto getBookByAuthorAndName(@Param("bookName")String bookName, @Param("nameAuthor")String nameAuthor);
+    Optional<BookResponseDto> getBookByAuthorAndName(@Param("bookName")String bookName, @Param("nameAuthor")String nameAuthor);
 }

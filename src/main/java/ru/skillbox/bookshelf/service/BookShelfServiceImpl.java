@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.skillbox.bookshelf.dto.BookNewDto;
 import ru.skillbox.bookshelf.dto.BookResponseDto;
+import ru.skillbox.bookshelf.dto.CategoryNewDto;
+import ru.skillbox.bookshelf.exception.exceptions.ObjectNotFoundException;
 import ru.skillbox.bookshelf.repository.BookShelfRepository;
 import java.util.List;
 
@@ -22,8 +25,15 @@ public class BookShelfServiceImpl implements BookShelf {
 
     @Override
     public BookResponseDto findBookByNameAndAuthor(String bookName, String nameAuthor) {
-        return repository.getBookByAuthorAndName(bookName, nameAuthor);
+        return repository.getBookByAuthorAndName(bookName, nameAuthor).orElseThrow(() -> {
+            log.error("No such element!");
+            throw new ObjectNotFoundException("No such element!");
+        });
     }
 
+    @Override
+    public BookResponseDto createBook(BookNewDto bookNewDto, CategoryNewDto categoryNewDto) {
 
+        return null;
+    }
 }

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skillbox.bookshelf.dto.BookNewDto;
 import ru.skillbox.bookshelf.dto.BookResponseDto;
+import ru.skillbox.bookshelf.dto.CategoryNewDto;
+import ru.skillbox.bookshelf.service.BookShelf;
 import ru.skillbox.bookshelf.service.BookShelfServiceImpl;
 import java.util.List;
 
@@ -27,7 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookShelfController {
 
-    private final BookShelfServiceImpl service;
+    private final BookShelf service;
 
     @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
@@ -39,8 +41,6 @@ public class BookShelfController {
 
         return service.findAllBooksByName(nameCategory, page);
     }
-
-    //TODO: найти одну книгу по её названию и автору
 
     @GetMapping("/find")
     @ResponseStatus(HttpStatus.OK)
@@ -54,10 +54,9 @@ public class BookShelfController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookResponseDto createBook(@RequestBody BookNewDto bookNewDto) {
+    public BookResponseDto createBook(@RequestBody BookNewDto bookNewDto, CategoryNewDto categoryNewDto) {
 
-        //return bookShelfService.createBook(bookNewDto);
-        return null;
+        return service.createBook(bookNewDto,categoryNewDto);
     }
 
     //TODO: обновить информацию о книге
@@ -77,6 +76,6 @@ public class BookShelfController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBookById(@PathVariable(name = "id") Long id) {
-        //bookShelfService.deleteBookById(id);
+        //service.deleteBookById(id);
     }
 }

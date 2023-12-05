@@ -16,8 +16,4 @@ public class CategoryNewDto {
     @NotNull
     @NotBlank
     private String name;
-
-    @NotNull
-    @NotBlank
-    private BookNewDto bookNewDto;
 }
