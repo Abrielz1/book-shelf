@@ -13,12 +13,13 @@ import java.util.List;
 public interface BookShelfRepository extends JpaRepository<Book, Long> {
 
     @Query(value = """
-           select * from public.books where books.category like concat('%', :nameCategory , '%')
+           select * from public.books as b
+            join categories c on b.id = c.book_id where c.name like concat('%', :nameCategory , '%')
            """, nativeQuery = true)
     List<BookResponseDto> getAllBooksByName(@Param("nameCategory ")String nameCategory, PageRequest page);
 
     @Query(value = """
-           select * from public.books where books.title like concat('%', :bookName , '%') and
+           select * from public.books where books.name like concat('%', :bookName , '%') and
            books.author like concat('%', :nameAuthor , '%')
            """, nativeQuery = true)
     BookResponseDto getBookByAuthorAndName(@Param("bookName")String bookName, @Param("nameAuthor")String nameAuthor);
