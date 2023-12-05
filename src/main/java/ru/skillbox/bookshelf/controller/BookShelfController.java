@@ -50,8 +50,6 @@ public class BookShelfController {
         return service.findBookByNameAndAuthor(bookName, nameAuthor);
     }
 
-    //TODO: создать книгу
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookResponseDto createBook(@RequestBody BookNewDto bookNewDto, CategoryNewDto categoryNewDto) {
@@ -66,16 +64,12 @@ public class BookShelfController {
     public BookResponseDto updateBook(@PathVariable(name = "id") Long id,
                                       @RequestBody BookResponseDto bookResponseDto) {
 
-        //return bookShelfService.createBookById(id, bookResponseDto);
-        return null;
+        return service.updateBook(id, bookResponseDto);
     }
-
-
-    //TODO: удалить книгу по ID
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBookById(@PathVariable(name = "id") Long id) {
-        //service.deleteBookById(id);
+        service.deleteBookById(id);
     }
 }

@@ -4,8 +4,10 @@ import org.springframework.data.domain.PageRequest;
 import ru.skillbox.bookshelf.dto.BookNewDto;
 import ru.skillbox.bookshelf.dto.BookResponseDto;
 import ru.skillbox.bookshelf.dto.CategoryNewDto;
+import ru.skillbox.bookshelf.entity.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookShelf {
 
@@ -14,4 +16,9 @@ public interface BookShelf {
     BookResponseDto findBookByNameAndAuthor(String bookName, String nameAuthor);
 
     BookResponseDto createBook(BookNewDto bookNewDto, CategoryNewDto categoryNewDto);
+
+    BookResponseDto updateBook(Long id, BookResponseDto bookResponseDto);
+
+    void deleteBookById(Long id);
+
 }
