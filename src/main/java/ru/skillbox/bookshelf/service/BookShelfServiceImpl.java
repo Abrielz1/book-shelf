@@ -7,8 +7,13 @@ import org.springframework.stereotype.Service;
 import ru.skillbox.bookshelf.dto.BookNewDto;
 import ru.skillbox.bookshelf.dto.BookResponseDto;
 import ru.skillbox.bookshelf.dto.CategoryNewDto;
+import ru.skillbox.bookshelf.entity.Book;
+import ru.skillbox.bookshelf.entity.Category;
 import ru.skillbox.bookshelf.exception.exceptions.ObjectNotFoundException;
+import ru.skillbox.bookshelf.mapper.BookMapper;
+import ru.skillbox.bookshelf.mapper.CategoryMapper;
 import ru.skillbox.bookshelf.repository.BookShelfRepository;
+
 import java.util.List;
 
 @Slf4j
@@ -34,6 +39,29 @@ public class BookShelfServiceImpl implements BookShelf {
     @Override
     public BookResponseDto createBook(BookNewDto bookNewDto, CategoryNewDto categoryNewDto) {
 
-        return null;
+        Book book = BookMapper.toBook(bookNewDto, categoryNewDto);
+        Category newCategory;
+
+        if (!repository.checkIfExists(categoryNewDto.getName())) {
+
+            book = BookMapper.toBook(bookNewDto, categoryNewDto);
+            repository.save(book);
+
+            return BookMapper.bookResponseDto(book, book.getCategory());
+
+        } else {
+
+            newCategory = getFromDB(categoryNewDto.getName());
+            book.setCategory(newCategory);
+
+            return BookMapper.bookResponseDto(book, book.getCategory());
+        }
+    }
+
+    private Category getFromDB(String name) {
+        return repository.getCategoryByName(name).orElseThrow(() -> {
+            log.error("No such element!");
+            throw new ObjectNotFoundException("No such element!");
+        });
     }
 }

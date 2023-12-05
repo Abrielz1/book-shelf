@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.skillbox.bookshelf.dto.BookResponseDto;
+import ru.skillbox.bookshelf.dto.CategoryNewDto;
 import ru.skillbox.bookshelf.entity.Book;
+import ru.skillbox.bookshelf.entity.Category;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +18,7 @@ public interface BookShelfRepository extends JpaRepository<Book, Long> {
 
     @Query(value = """
            select * from public.books as b
-            join categories c on b.id = c.book_id where c.name like concat('%', :nameCategory , '%')
+            join categories as c on b.id = c.book_id where c.name like concat('%', :nameCategory , '%')
            """, nativeQuery = true)
     List<BookResponseDto> getAllBooksByName(@Param("nameCategory ")String nameCategory, PageRequest page);
 
@@ -24,4 +27,16 @@ public interface BookShelfRepository extends JpaRepository<Book, Long> {
            books.author like concat('%', :nameAuthor , '%')
            """, nativeQuery = true)
     Optional<BookResponseDto> getBookByAuthorAndName(@Param("bookName")String bookName, @Param("nameAuthor")String nameAuthor);
+
+    Optional<Object> getByCategoryName(CategoryNewDto categoryNewDto);
+
+    @Query(value = """
+           select case when count(c)>0 then true else false end from categories as c where c.name like concat('%', :nameCategory , '%')
+           """, nativeQuery = true)
+    Boolean checkIfExists(@Param("nameCategory ")String nameCategory);
+
+    @Query(value = """
+           select * from categories where name like concat('%', :nameCategory , '%')
+                   """, nativeQuery = true)
+    Optional<Category> getCategoryByName(@Param("nameCategory ")String nameCategory);
 }

@@ -6,7 +6,6 @@ import ru.skillbox.bookshelf.dto.BookResponseDto;
 import ru.skillbox.bookshelf.dto.CategoryNewDto;
 import ru.skillbox.bookshelf.entity.Book;
 import ru.skillbox.bookshelf.entity.Category;
-
 import static ru.skillbox.bookshelf.mapper.CategoryMapper.toCategory;
 
 @Data
