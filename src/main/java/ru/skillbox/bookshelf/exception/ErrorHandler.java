@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.skillbox.homework4.exception.exceptions.BadRequestException;
-import ru.skillbox.homework4.exception.exceptions.ObjectNotFoundException;
-import ru.skillbox.homework4.exception.exceptions.UnsupportedStateException;
+import ru.skillbox.bookshelf.exception.exceptions.BadRequestException;
+import ru.skillbox.bookshelf.exception.exceptions.ObjectNotFoundException;
+import ru.skillbox.bookshelf.exception.exceptions.UnsupportedStateException;
 
 @RestControllerAdvice
 @Slf4j

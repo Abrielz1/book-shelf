@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skillbox.bookshelf.dto.BookNewDto;
 import ru.skillbox.bookshelf.dto.BookResponseDto;
-import ru.skillbox.bookshelf.service.BookShelf;
+import ru.skillbox.bookshelf.service.BookShelfServiceImpl;
 import java.util.List;
 
 @Slf4j
@@ -27,31 +27,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookShelfController {
 
-    private final BookShelf bookShelfService;
+    private final BookShelfServiceImpl service;
 
-    //TODO: найти список книг по имени категории
-
-    @GetMapping("/find")
+    @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
-    public List<BookResponseDto> findAllBooksByNameCategory(@RequestParam() String nameCategory,
-                                                            @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
-                                                            @Positive @RequestParam(defaultValue = "10") Integer size) {
+    public List<BookResponseDto> findAll(@RequestParam() String nameCategory,
+                                         @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                         @Positive @RequestParam(defaultValue = "10") Integer size) {
 
         PageRequest page = PageRequest.of(from / size, size);
 
-        //return bookShelfService.findAllBooksByNameCategory(nameCategory, page);
-        return null;
+        return service.findAllBooksByName(nameCategory, page);
     }
 
     //TODO: найти одну книгу по её названию и автору
 
     @GetMapping("/find")
     @ResponseStatus(HttpStatus.OK)
-    public BookResponseDto findBookByNameAndAuthor(@RequestParam() String bookName,
+    public BookResponseDto findBy(@RequestParam() String bookName,
                                                    @RequestParam() String nameAuthor) {
 
-        //return bookShelfService.findBookByNameAndAuthor(bookName, nameAuthor);
-        return null;
+        return service.findBookByNameAndAuthor(bookName, nameAuthor);
     }
 
     //TODO: создать книгу
@@ -68,7 +64,7 @@ public class BookShelfController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookResponseDto updateBookById(@PathVariable(name = "id") Long id,
+    public BookResponseDto updateBook(@PathVariable(name = "id") Long id,
                                       @RequestBody BookResponseDto bookResponseDto) {
 
         //return bookShelfService.createBookById(id, bookResponseDto);
