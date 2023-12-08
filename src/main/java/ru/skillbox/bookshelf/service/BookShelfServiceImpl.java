@@ -12,8 +12,8 @@ import ru.skillbox.bookshelf.entity.Category;
 import ru.skillbox.bookshelf.exception.exceptions.ObjectNotFoundException;
 import ru.skillbox.bookshelf.mapper.BookMapper;
 import ru.skillbox.bookshelf.repository.BookShelfRepository;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import static ru.skillbox.bookshelf.mapper.BookMapper.bookResponseDto;
 
 @Slf4j
@@ -27,19 +27,19 @@ public class BookShelfServiceImpl implements BookShelf {
     public List<BookResponseDto> findAllBooksByName(String nameCategory, PageRequest page) {
 
         log.info("Sent all books!");
-//        return repository.getAllBooksByName(nameCategory, page)
-//                .stream()
-//                .map(BookMapper::bookResponseDto) //todo: ругается
-//                .collect(Collectors.toList());
+        return repository.getAllBooksByName(nameCategory, page) //todo: проверить
+                .stream()
+                .map((t) -> BookMapper.bookResponseDto(t, t.getCategory()))
+                .collect(Collectors.toList());
 
-        List<Book> list = repository.getAllBooksByName(nameCategory, page);
-        List<BookResponseDto> responseDtos = new ArrayList<>();
-
-        for (Book i : list) {
-            responseDtos.add(BookMapper.bookResponseDto(i, i.getCategory()));
-        }
-
-        return responseDtos;
+//        List<Book> list = repository.getAllBooksByName(nameCategory, page);
+//        List<BookResponseDto> responseDtos = new ArrayList<>();
+//
+//        for (Book i : list) {
+//            responseDtos.add(BookMapper.bookResponseDto(i, i.getCategory()));
+//        }
+//
+//        return responseDtos;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class BookShelfServiceImpl implements BookShelf {
 
         return repository.getCategoryByName(name).orElseThrow(() -> {
             log.error("No such element!");
-            throw new ObjectNotFoundException("No such element!");
+            return new ObjectNotFoundException("No such element!");
         });
     }
 
@@ -119,7 +119,7 @@ public class BookShelfServiceImpl implements BookShelf {
         return repository.findById(id).orElseThrow(() -> {
 
             log.error("No such element!");
-            throw new ObjectNotFoundException("No such element!");
+            return new ObjectNotFoundException("No such element!");
         });
     }
 }
