@@ -15,7 +15,7 @@ public interface BookShelf {
 
     BookResponseDto findBookByNameAndAuthor(String bookName, String nameAuthor);
 
-    BookResponseDto createBook(BookNewDto bookNewDto, CategoryNewDto categoryNewDto);
+    BookResponseDto createBook(BookNewDto bookNewDto);
 
     BookResponseDto updateBook(Long id, BookResponseDto bookResponseDto);
 

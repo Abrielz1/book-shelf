@@ -14,7 +14,4 @@ public class CategoryResponseDto {
     private Long Id;
 
     private String name;
-
-    private BookResponseDto book;
-
 }

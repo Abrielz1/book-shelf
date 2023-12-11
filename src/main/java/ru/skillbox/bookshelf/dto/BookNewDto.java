@@ -23,5 +23,5 @@ public class BookNewDto {
 
     @NotNull
     @NotBlank
-    private CategoryNewDto category;
+    private String category;
 }

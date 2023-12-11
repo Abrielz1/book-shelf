@@ -16,11 +16,10 @@ public class CategoryMapper {
                 .build();
     }
 
-    public static CategoryResponseDto categoryResponseDto(Category category, Book book) {
+    public static CategoryResponseDto categoryResponseDto(Category category) {
         return CategoryResponseDto.builder()
                 .Id(category.getId())
                 .name(category.getName())
-                .book(BookMapper.bookResponseDto(book, category))
                 .build();
     }
 }

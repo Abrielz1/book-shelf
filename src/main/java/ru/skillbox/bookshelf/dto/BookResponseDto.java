@@ -13,13 +13,9 @@ public class BookResponseDto {
 
     private Long Id;
 
-
     private String nameAuthor;
-
 
     private String bookName;
 
-
-    private CategoryResponseDto category;
-
+    private String category;
 }

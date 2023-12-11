@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skillbox.bookshelf.dto.BookNewDto;
 import ru.skillbox.bookshelf.dto.BookResponseDto;
-import ru.skillbox.bookshelf.dto.CategoryNewDto;
 import ru.skillbox.bookshelf.service.BookShelf;
-import ru.skillbox.bookshelf.service.BookShelfServiceImpl;
 import java.util.List;
 
 @Slf4j
@@ -52,9 +50,9 @@ public class BookShelfController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookResponseDto createBook(@RequestBody BookNewDto bookNewDto, CategoryNewDto categoryNewDto) {
+    public BookResponseDto createBook(@RequestBody BookNewDto bookNewDto) {
 
-        return service.createBook(bookNewDto,categoryNewDto);
+        return service.createBook(bookNewDto);
     }
 
     //TODO: обновить информацию о книге
