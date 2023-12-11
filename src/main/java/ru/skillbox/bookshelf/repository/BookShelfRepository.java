@@ -15,23 +15,23 @@ public interface BookShelfRepository extends JpaRepository<Book, Long> {
 
     @Query(value = """
            select * from public.books as b
-            join categories as c on b.id = c.book_id where c.name like concat('%', :nameCategory, '%')
+            join categories as c on b.id = c.book_id where LOWER(c.name) like LOWER(concat('%', :name, '%'))
            """, nativeQuery = true)
-    List<Book> getAllBooksByName(@Param("nameCategory")String nameCategory, PageRequest page);
+    List<Book> getAllBooksByName(@Param("nameCategory")String name, PageRequest page);
 
     @Query(value = """
-           select * from public.books where books.name like concat('%', :bookName, '%') and
-           books.author like concat('%', :nameAuthor, '%')
+           select * from public.books where LOWER(books.name) like LOWER(concat('%', :bookName, '%')) and
+           LOWER(books.author) like LOWER(concat('%', :nameAuthor, '%'))
            """, nativeQuery = true)
     Optional<Book> getBookByAuthorAndName(@Param("bookName")String bookName, @Param("nameAuthor")String nameAuthor);
 
     @Query(value = """
-           select case when count(c)>0 then true else false end from categories as c where c.name like concat('%', :nameCategory, '%')
+           select case when count(c)>0 then true else false end from categories as c where c.name like concat('%', :name, '%')
            """, nativeQuery = true)
-    Boolean checkIfExists(@Param("nameCategory")String nameCategory);
+    Boolean checkIfExists(@Param("nameCategory")String name);
 
     @Query(value = """
-           select * from categories as c where c.name like concat('%', :nameCategory, '%')
+           select * from categories as c where LOWER(c.name) like LOWER(:name)
                    """, nativeQuery = true)
-    Optional<Category> getCategoryByName(@Param("nameCategory")String nameCategory);
+    Optional<Category> getCategoryByName(@Param("name")String name);
 }
