@@ -66,14 +66,7 @@ public class BookShelfServiceImpl implements BookShelf {
             category = toCategory(categoryNewDto);
             categoryRepository.save(category);
         } else {
-            Long id = getFromDB(nameCategory).getId();
-            String name = getFromDB(nameCategory).getName();
-            Book bookDB = getFromDB(nameCategory).getBook();
-            category = Category.builder()
-                    .Id(id)
-                    .name(name)
-                    .book(bookDB)
-                    .build();
+            category = getFromDB(nameCategory.trim().toLowerCase());
         }
 
         book = toBook(bookNewDto, category);
