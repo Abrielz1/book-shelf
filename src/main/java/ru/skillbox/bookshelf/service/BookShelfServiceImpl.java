@@ -29,10 +29,10 @@ public class BookShelfServiceImpl implements BookShelf {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<BookResponseDto> findAllBooksByName(String nameCategory, PageRequest page) {
+    public List<BookResponseDto> findAllBooksByName(String name, PageRequest page) {
 
         log.info("Sent all books!");
-        return repository.getAllBooksByName(nameCategory, page)
+        return repository.getAllBooksByName(name.toLowerCase().trim(), page)
                 .stream()
                 .map(BookMapper::bookResponseDto)
                 .collect(Collectors.toList());
@@ -71,8 +71,8 @@ public class BookShelfServiceImpl implements BookShelf {
 
         book = toBook(bookNewDto, category);
         repository.save(book);
-   //     category.setBook(book);
-    //    categoryRepository.save(category);
+      //  category.setBooksList(List.of(book));
+        categoryRepository.save(category);
 
         log.info("Created!");
         BookResponseDto responseDto = bookResponseDto(book);

@@ -13,10 +13,9 @@ import java.util.Optional;
 @Repository
 public interface BookShelfRepository extends JpaRepository<Book, Long> {
 
-    @Query(value = """
-           select * from public.books as b
-            join categories as c on b.id = c.book_id where LOWER(c.name) like LOWER(concat('%', :name, '%'))
-           """, nativeQuery = true)
+    @Query("""
+           from Book as b join Category as c on b.category.Id = c.Id where c.name like :name
+           """)
     List<Book> getAllBooksByName(@Param("name")String name, PageRequest page);
 
     @Query(value = """

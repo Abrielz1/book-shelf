@@ -31,7 +31,7 @@ public class BookShelfController {
 
     @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
-    public List<BookResponseDto> findAll(@RequestParam() String nameCategory,
+    public List<BookResponseDto> findAll(@RequestParam("nameCategory") String nameCategory,
                                          @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                          @Positive @RequestParam(defaultValue = "10") Integer size) {
 
@@ -42,8 +42,8 @@ public class BookShelfController {
 
     @GetMapping("/find")
     @ResponseStatus(HttpStatus.OK)
-    public BookResponseDto findBy(@RequestParam() String bookName,
-                                                   @RequestParam() String nameAuthor) {
+    public BookResponseDto findBy(@RequestParam("bookName") String bookName,
+                                  @RequestParam("nameAuthor") String nameAuthor) {
 
         return service.findBookByNameAndAuthor(bookName, nameAuthor);
     }

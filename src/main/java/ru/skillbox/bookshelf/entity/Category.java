@@ -1,5 +1,6 @@
 package ru.skillbox.bookshelf.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,10 +39,9 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @ToString.Exclude
-    @JoinColumn(name = "book_id")
-    private List<Book> books;
+    private List<Book> booksList;
 
     @Override
     public final boolean equals(Object o) {
