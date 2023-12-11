@@ -71,8 +71,8 @@ public class BookShelfServiceImpl implements BookShelf {
 
         book = toBook(bookNewDto, category);
         repository.save(book);
-        category.setBook(book);
-        categoryRepository.save(category);
+   //     category.setBook(book);
+    //    categoryRepository.save(category);
 
         log.info("Created!");
         BookResponseDto responseDto = bookResponseDto(book);
@@ -109,7 +109,7 @@ public class BookShelfServiceImpl implements BookShelf {
 
     private Category getFromDB(String nameCategory) {
 
-        return repository.getCategoryByName(nameCategory).orElseThrow(() -> {
+        return repository.getCategory(nameCategory).orElseThrow(() -> {
             log.error("No such element!");
             return new ObjectNotFoundException("No such element!");
         });

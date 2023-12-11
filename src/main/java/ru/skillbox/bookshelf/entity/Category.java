@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
+
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -35,10 +38,10 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @OneToOne()
+    @OneToMany()
     @ToString.Exclude
     @JoinColumn(name = "book_id")
-    private Book book;
+    private List<Book> books;
 
     @Override
     public final boolean equals(Object o) {

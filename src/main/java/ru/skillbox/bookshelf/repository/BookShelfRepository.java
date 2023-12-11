@@ -34,4 +34,10 @@ public interface BookShelfRepository extends JpaRepository<Book, Long> {
            select * from categories as c where LOWER(c.name) like LOWER(:name)
                    """, nativeQuery = true)
     Optional<Category> getCategoryByName(@Param("name")String name);
+
+    @Query("""
+           from Category  as c
+           where c.name like :name
+           """)
+    Optional<Category> getCategory(@Param("name")String name);
 }
