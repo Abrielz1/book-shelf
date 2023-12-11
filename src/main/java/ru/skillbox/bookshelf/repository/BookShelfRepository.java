@@ -17,7 +17,7 @@ public interface BookShelfRepository extends JpaRepository<Book, Long> {
            select * from public.books as b
             join categories as c on b.id = c.book_id where LOWER(c.name) like LOWER(concat('%', :name, '%'))
            """, nativeQuery = true)
-    List<Book> getAllBooksByName(@Param("nameCategory")String name, PageRequest page);
+    List<Book> getAllBooksByName(@Param("name")String name, PageRequest page);
 
     @Query(value = """
            select * from public.books where LOWER(books.name) like LOWER(concat('%', :bookName, '%')) and
@@ -28,7 +28,7 @@ public interface BookShelfRepository extends JpaRepository<Book, Long> {
     @Query(value = """
            select case when count(c)>0 then true else false end from categories as c where c.name like concat('%', :name, '%')
            """, nativeQuery = true)
-    Boolean checkIfExists(@Param("nameCategory")String name);
+    Boolean checkIfExists(@Param("name")String name);
 
     @Query(value = """
            select * from categories as c where LOWER(c.name) like LOWER(:name)
