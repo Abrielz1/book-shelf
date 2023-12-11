@@ -3,7 +3,6 @@ package ru.skillbox.bookshelf.mapper;
 import lombok.Data;
 import ru.skillbox.bookshelf.dto.CategoryNewDto;
 import ru.skillbox.bookshelf.dto.CategoryResponseDto;
-import ru.skillbox.bookshelf.entity.Book;
 import ru.skillbox.bookshelf.entity.Category;
 
 @Data

@@ -71,12 +71,10 @@ public class BookShelfServiceImpl implements BookShelf {
 
         book = toBook(bookNewDto, category);
         repository.save(book);
-      //  category.setBooksList(List.of(book));
         categoryRepository.save(category);
 
         log.info("Created!");
-        BookResponseDto responseDto = bookResponseDto(book);
-        return responseDto;
+        return bookResponseDto(book);
     }
 
     @Override

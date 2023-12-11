@@ -29,11 +29,6 @@ public interface BookShelfRepository extends JpaRepository<Book, Long> {
            """, nativeQuery = true)
     Boolean checkIfExists(@Param("name")String name);
 
-    @Query(value = """
-           select * from categories as c where LOWER(c.name) like LOWER(:name)
-                   """, nativeQuery = true)
-    Optional<Category> getCategoryByName(@Param("name")String name);
-
     @Query("""
            from Category  as c
            where c.name like :name

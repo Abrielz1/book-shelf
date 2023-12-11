@@ -55,8 +55,6 @@ public class BookShelfController {
         return service.createBook(bookNewDto);
     }
 
-    //TODO: обновить информацию о книге
-
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BookResponseDto updateBook(@PathVariable(name = "id") Long id,
