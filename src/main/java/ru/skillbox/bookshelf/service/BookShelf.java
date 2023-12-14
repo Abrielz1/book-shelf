@@ -16,5 +16,4 @@ public interface BookShelf {
     BookResponseDto updateBook(Long id, BookResponseDto bookResponseDto);
 
     void deleteBookById(Long id);
-
 }

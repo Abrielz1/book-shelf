@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,12 +17,12 @@ import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 import java.util.Objects;
 
+@Table(name = "books")
 @Getter
 @Setter
-@ToString
 @Entity
-@Table(name = "books")
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book {

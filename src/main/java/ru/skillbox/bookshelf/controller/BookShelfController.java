@@ -36,7 +36,6 @@ public class BookShelfController {
                                          @Positive @RequestParam(defaultValue = "10") Integer size) {
 
         PageRequest page = PageRequest.of(from / size, size);
-
         return service.findAllBooksByName(nameCategory, page);
     }
 
@@ -66,6 +65,7 @@ public class BookShelfController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBookById(@PathVariable(name = "id") Long id) {
+
         service.deleteBookById(id);
     }
 }

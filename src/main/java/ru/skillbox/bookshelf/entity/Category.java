@@ -6,9 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,16 +15,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
-
 import java.util.List;
 import java.util.Objects;
 
+@Table(name = "categories")
 @Getter
 @Setter
-@ToString
 @Entity
-@Table(name = "categories")
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
