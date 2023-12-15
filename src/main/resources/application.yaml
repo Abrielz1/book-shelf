@@ -15,7 +15,7 @@ spring:
     password: root
     hikari:
       schema: public
-      connection-init-sql: CREATE SCHEMA IF NOT EXISTS app_schema
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS postgres
       connection-timeout: 10000
 
 #app:
