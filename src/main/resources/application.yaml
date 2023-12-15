@@ -22,7 +22,7 @@ app:
   redis:
     enable: true
   integration:
-    base-url: http://localhost:8082
+    base-url: http://localhost:8080
   cache:
     cacheType: redis
     cache-names:
