@@ -2,6 +2,10 @@ package ru.skillbox.bookshelf.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.skillbox.bookshelf.dto.BookNewDto;
@@ -21,6 +25,7 @@ import static ru.skillbox.bookshelf.mapper.CategoryMapper.toCategory;
 
 @Slf4j
 @Service
+@CacheConfig(cacheManager = "redisCacheManager")
 @RequiredArgsConstructor
 public class BookShelfServiceImpl implements BookShelf {
 
@@ -29,6 +34,7 @@ public class BookShelfServiceImpl implements BookShelf {
     private final CategoryRepository categoryRepository;
 
     @Override
+    @Cacheable("databaseEntities")
     public List<BookResponseDto> findAllBooksByName(String name, PageRequest page) {
 
         log.info("Sent all books!");
@@ -39,6 +45,7 @@ public class BookShelfServiceImpl implements BookShelf {
     }
 
     @Override
+    @Cacheable("databaseEntities")
     public BookResponseDto findBookByNameAndAuthor(String bookName, String nameAuthor) {
 
         Book book = repository.getBookByAuthorAndName(bookName, nameAuthor).orElseThrow(() -> {
@@ -51,6 +58,7 @@ public class BookShelfServiceImpl implements BookShelf {
     }
 
     @Override
+    @CacheEvict(value = "databaseEntities", allEntries = true)
     public BookResponseDto createBook(BookNewDto bookNewDto) {
 
         String nameCategory = bookNewDto.getCategory();
@@ -78,6 +86,10 @@ public class BookShelfServiceImpl implements BookShelf {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "databaseEntities", allEntries = true),
+            @CacheEvict(value = "databaseEntityByName", allEntries = true)
+    })
     public BookResponseDto updateBook(Long id, BookResponseDto bookResponseDto) {
 
         getFromDB(bookResponseDto.getCategory());
@@ -98,6 +110,10 @@ public class BookShelfServiceImpl implements BookShelf {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "databaseEntities", allEntries = true),
+            @CacheEvict(value = "databaseEntityByName", allEntries = true)
+    })
     public void deleteBookById(Long id) {
 
         Book book = checkBook(id);
