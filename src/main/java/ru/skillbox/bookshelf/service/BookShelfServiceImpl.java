@@ -45,7 +45,7 @@ public class BookShelfServiceImpl implements BookShelf {
     }
 
     @Override
-    @Cacheable("databaseEntities")
+    @Cacheable("databaseEntitiesByName")
     public BookResponseDto findBookByNameAndAuthor(String bookName, String nameAuthor) {
 
         Book book = repository.getBookByAuthorAndName(bookName, nameAuthor).orElseThrow(() -> {

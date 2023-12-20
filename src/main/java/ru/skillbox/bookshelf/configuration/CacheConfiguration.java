@@ -31,7 +31,8 @@ public class CacheConfiguration {
 
         @Override
         protected Cache createConcurrentMapCache(String name) {
-            return new ConcurrentMapCache(name,
+            return new ConcurrentMapCache(
+                    name,
                     CacheBuilder.newBuilder()
                             .expireAfterWrite(properties.getCachePropertiesMap().get(name).getExpiry())
                             .build()
@@ -52,7 +53,7 @@ public class CacheConfiguration {
 
     @Bean
     @ConditionalOnProperty(prefix = "app.redis", name = "enable", havingValue = "true")
-    @ConditionalOnExpression("'${app.cache.cacheType}'.equals('redis')")
+    @ConditionalOnExpression("'${app.cache.cacheType}'.equals('redis')")//npe
     public CacheManager redisCacheManager(AppCacheProperties appCacheProperties,
                                           LettuceConnectionFactory lettuceConnectionFactory) {
 
@@ -61,7 +62,7 @@ public class CacheConfiguration {
 
         appCacheProperties.getCacheNames().forEach(cacheNames -> {
             redisCacheConfigurationMap.put(cacheNames, RedisCacheConfiguration.defaultCacheConfig().entryTtl(
-                    appCacheProperties.getCachePropertiesMap().get(cacheNames).getExpiry()
+                    appCacheProperties.getCachePropertiesMap().get(cacheNames).getExpiry() //npe
             ));
         });
 
